@@ -38,8 +38,9 @@ function toggleSelection(clickedButton) {
         // If 'Nothing' is selected, disable and deselect all other buttons
         buttons.forEach(button => {
             if (button !== clickedButton) {
-                button.disabled = clickedButton.classList.contains('selected');
                 button.classList.remove('selected'); // Ensure visual deselection
+                button.disabled = clickedButton.classList.contains('selected');
+               
             }
         });
     } else {
