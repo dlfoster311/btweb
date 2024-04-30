@@ -49,63 +49,51 @@
             element.classList.toggle('selected');
             // Add or remove the value from a hidden input for form submission
         }
-
-        function toggleSelection(clickedButton) {
+function toggleSelection(clickedButton) {
     const buttons = document.querySelectorAll('.toggle-button');
     const nothingButton = document.querySelector('.toggle-button[value="nothing"]');
     const newInBoxButtons = document.querySelectorAll('.toggle-button[value="new"], .toggle-button[value="new_open"]');
 
-    // Toggle 'Nothing' behavior
+    // Handling when 'Nothing' button is clicked
     if (clickedButton.value === 'nothing') {
-        // Toggle selection state of 'Nothing' button
-        clickedButton.classList.toggle('selected');
+        clickedButton.classList.toggle('selected'); // Toggle the 'Nothing' button's selected state
 
-        // Enable or disable other buttons based on 'Nothing' button state
         buttons.forEach(button => {
             if (button !== clickedButton) {
-                button.disabled = clickedButton.classList.contains('selected');
+                button.disabled = clickedButton.classList.contains('selected'); // Disable or enable other buttons
                 if (button.disabled) {
-                    button.classList.remove('selected');
+                    button.classList.remove('selected'); // Deselect other buttons if 'Nothing' is selected
                 }
             }
         });
     } else {
-        // Behavior for 'New in box' buttons
+        // Ensure that 'Nothing' is not selected when any other button is clicked
+        nothingButton.classList.remove('selected');
+        nothingButton.disabled = false;
+
+        // Toggle the clicked button's selected state unless it's a 'New in box' button that is already selected
+        if (!(clickedButton.value === 'new' || clickedButton.value === 'new_open') || !clickedButton.classList.contains('selected')) {
+            clickedButton.classList.toggle('selected');
+        }
+
+        // Specific logic for 'New in box' buttons
         if (clickedButton.value === 'new' || clickedButton.value === 'new_open') {
-            // Only one 'New in box' can be selected at a time
+            // Deselect the other 'New in box' button
             newInBoxButtons.forEach(button => {
                 if (button !== clickedButton) {
                     button.classList.remove('selected');
                 }
             });
-
-            // Toggle clicked button without forcing it to stay selected
-            clickedButton.classList.toggle('selected');
-
-            // Deselect and enable all buttons if no 'New in box' button is selected
-            if (!newInBoxButtons[0].classList.contains('selected') && !newInBoxButtons[1].classList.contains('selected')) {
-                buttons.forEach(button => {
-                    button.disabled = false;
-                });
-            }
-        } else {
-            // Standard behavior for all other buttons
-            clickedButton.classList.toggle('selected');
         }
 
-        // Deselect 'Nothing' button if any other button is selected
-        if (clickedButton.classList.contains('selected')) {
-            nothingButton.classList.remove('selected');
-            nothingButton.disabled = false;
+        // Check and enable all buttons if none are selected
+        const anySelected = [...buttons].some(button => button.classList.contains('selected'));
+        if (!anySelected) {
+            buttons.forEach(button => button.disabled = false);
         }
-    }
-
-    // Check if all buttons are deselected and enable 'Nothing' button if so
-    const anySelected = [...buttons].some(button => button.classList.contains('selected'));
-    if (!anySelected) {
-        nothingButton.disabled = false;
     }
 }
+
 
 
         function toggleFieldsBasedOnNeeds() {
