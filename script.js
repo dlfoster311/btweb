@@ -32,22 +32,41 @@ function toggleSelection(clickedButton) {
     const newInBoxButtons = document.querySelectorAll('.toggle-button[value="new"], .toggle-button[value="new_open"]');
 
     if (clickedButton.value === 'nothing') {
+        // Toggle the 'Nothing' button's selected state
         clickedButton.classList.toggle('selected');
+
+        // If 'Nothing' is selected, disable and deselect all other buttons
         buttons.forEach(button => {
-            button.disabled = clickedButton.classList.contains('selected');
-            if (button.disabled) button.classList.remove('selected');
+            if (button !== clickedButton) {
+                button.disabled = clickedButton.classList.contains('selected');
+                button.classList.remove('selected'); // Ensure visual deselection
+            }
         });
     } else {
+        // Ensure that 'Nothing' is not selected when any other button is clicked
         nothingButton.classList.remove('selected');
         nothingButton.disabled = false;
-        clickedButton.classList.toggle('selected');
+
+        // Toggle the clicked button's selected state unless it's a 'New in box' button that is already selected
+        if (!(clickedButton.value === 'new' || clickedButton.value === 'new_open') || !clickedButton.classList.contains('selected')) {
+            clickedButton.classList.toggle('selected');
+        }
+
+        // Specific logic for 'New in box' buttons
         newInBoxButtons.forEach(button => {
             if (button !== clickedButton && button.value === clickedButton.value) {
                 button.classList.remove('selected');
             }
         });
+
+        // If no buttons are selected, ensure all are enabled
+        const anySelected = [...buttons].some(button => button.classList.contains('selected'));
+        if (!anySelected) {
+            buttons.forEach(button => button.disabled = false);
+        }
     }
 }
+
 
 function toggleBackupMessage() {
     var checkbox = document.getElementById('backup-toggle');
