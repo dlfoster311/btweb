@@ -48,17 +48,18 @@ function toggleSelection(clickedButton) {
         nothingButton.classList.remove('selected');
         nothingButton.disabled = false;
 
-        // Toggle the clicked button's selected state unless it's a 'New in box' button that is already selected
-        if (!(clickedButton.value === 'new' || clickedButton.value === 'new_open') || !clickedButton.classList.contains('selected')) {
+        // Specific logic for 'New in box' buttons
+        if (clickedButton.value === 'new' || clickedButton.value === 'new_open') {
+            newInBoxButtons.forEach(button => {
+                if (button !== clickedButton) {
+                    button.classList.remove('selected'); // Deselect the other 'New in box' button
+                }
+            });
+            clickedButton.classList.add('selected'); // Ensure the clicked button is selected
+        } else {
+            // Toggle the clicked button's selected state for all other buttons
             clickedButton.classList.toggle('selected');
         }
-
-        // Specific logic for 'New in box' buttons
-        newInBoxButtons.forEach(button => {
-            if (button !== clickedButton && button.value === clickedButton.value) {
-                button.classList.remove('selected');
-            }
-        });
 
         // If no buttons are selected, ensure all are enabled
         const anySelected = [...buttons].some(button => button.classList.contains('selected'));
