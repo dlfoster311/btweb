@@ -13,9 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            /* Adjust alignment */
             padding-top: 2vh;
-            /* Padding to prevent cutting off */
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -34,7 +32,6 @@
         textarea,
         select {
             width: calc(100% - 20px);
-            /* Adjust width for padding */
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #333;
@@ -42,7 +39,6 @@
             color: #fff;
             border-radius: 5px;
             font-size: 16px;
-            /* Prevent zoom on iOS */
         }
 
         input[type="submit"] {
@@ -72,11 +68,7 @@
             color: #121212;
         }
 
-        .light-mode form {
-            background: #ffffff;
-            color: #121212;
-        }
-
+        .light-mode form,
         .light-mode input,
         .light-mode textarea,
         .light-mode select {
@@ -93,9 +85,7 @@
             position: relative;
             display: inline-block;
             width: 40px;
-            /* Reduced from 60px */
             height: 20px;
-            /* Reduced from 34px */
         }
 
         .switch input {
@@ -112,22 +102,17 @@
             right: 0;
             bottom: 0;
             background-color: #ff6161;
-            transition: ..4s;
+            transition: .4s;
             border-radius: 20px;
-            /* Full height to make it round */
         }
 
         .slider:before {
             position: absolute;
             content: "";
             height: 16px;
-            /* Reduced from 26px */
             width: 16px;
-            /* Reduced from 26px */
             left: 2px;
-            /* Reduced for smaller padding */
             bottom: 2px;
-            /* Adjusted for vertical centering */
             background-color: white;
             transition: .4s;
         }
@@ -145,16 +130,13 @@
             color: #fff;
         }
 
-        input:checked+.slider {
+        input:checked + .slider {
             background-color: #33cc33;
         }
 
-        input:checked+.slider:before {
+        input:checked + .slider:before {
             transform: translateX(20px);
-            /* Adjusted to match the new width */
         }
-
-        /* Keeping the slider round */
 
         .slider.round:before {
             border-radius: 50%;
